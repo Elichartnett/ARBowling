@@ -6,16 +6,25 @@
 //
 
 import SwiftUI
+import RealityKit
 
 struct ContentView: View {
+    
+    private let arView = ARGameView()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        
+        ZStack {
+            ARViewContainer(arView: arView).ignoresSafeArea()
+            
+            ControlsView { direction in
+                arView.startApplyingForce(direction: direction)
+            } stopApplyingForce: {
+                arView.stopApplyingForce()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+            .padding()
         }
-        .padding()
     }
 }
 
